@@ -8,20 +8,17 @@ export const SectionWrap = styled.section`
   padding-bottom: 30px;
   padding-left: 20px;
 
-  background-color: ${({ theme }) => theme.colors.set4};
-
-  width: 550px;
+  background-color: ${({ theme: { colors } }) => colors.backgroundColorLight};
 `;
 
 export const Title = styled.h1`
   margin-bottom: 45px;
 
-  color: ${({ theme }) => theme.colors.titleColor};
+  color: ${({ theme: { colors } }) => colors.textColorDark};
   font-weight: 700;
   font-size: 36px;
   line-height: 1.11;
   letter-spacing: 0.72px;
-
   text-align: center;
   text-transform: capitalize;
 `;

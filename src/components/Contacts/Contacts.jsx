@@ -14,7 +14,9 @@ export default function Contacts({
 }) {
   return (
     <Wrap>
-      <Title>{title}</Title>
+      <Title>
+        <span>{title}</span>
+      </Title>
       <Filter onChange={onChange} value={value} />
       <ContactList onRemoveContact={onRemoveContact} contacts={contacts} />
       {children}

@@ -1,14 +1,32 @@
 import styled from 'styled-components';
 
 export const Title = styled.h2`
-  margin-bottom: 20px;
-  color: ${({ theme }) => theme.colors.titleColor};
+  display: flex;
+  justify-content: center;
+
+  margin-bottom: 30px;
+
+  color: ${({ theme: { colors } }) => colors.titleColorDark};
   font-weight: 700;
-  font-size: 28px;
+  font-size: 32px;
   line-height: 1.11;
   letter-spacing: 0.72px;
   text-transform: capitalize;
   text-align: center;
+
+  & span {
+    position: relative;
+  }
+
+  & span::after {
+    position: absolute;
+    bottom: -3px;
+    display: block;
+    content: '';
+    width: 100%;
+    height: 3px;
+    background-color: ${({ theme: { colors } }) => colors.accent};
+  }
 `;
 
 export const Wrap = styled.div`
@@ -16,7 +34,7 @@ export const Wrap = styled.div`
   padding-right: 20px;
   padding-bottom: 30px;
   padding-left: 20px;
-  border: 1px solid black;
+
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.colors.set1}60;
+  background-color: ${({ theme: { colors } }) => colors.backgroundColorDark}30;
 `;
