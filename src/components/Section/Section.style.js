@@ -9,6 +9,8 @@ export const SectionWrap = styled.section`
   padding-left: 20px;
 
   background-color: ${({ theme: { colors } }) => colors.backgroundColorLight};
+
+  max-width: 768px;
 `;
 
 export const Title = styled.h1`
