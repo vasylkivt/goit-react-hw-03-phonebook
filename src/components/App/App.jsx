@@ -57,8 +57,9 @@ export default class App extends Component {
 
     return (
       <Section title={'phonebook'}>
-        {isPhonebookEmpty && <Notification message="Add first contact!" />}
-        <ContactForm onSubmit={this.addContact} />
+        <ContactForm onSubmit={this.addContact}>
+          {isPhonebookEmpty && <Notification message="Add first contact!" />}
+        </ContactForm>
 
         {!isPhonebookEmpty ? (
           <Contacts
