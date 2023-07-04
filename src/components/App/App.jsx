@@ -1,3 +1,5 @@
+import LocalStorage from '../../helpers/localStorage';
+
 import ContactForm from 'components/ContactForm/ContactForm';
 import Contacts from 'components/Contacts/Contacts';
 import Notification from 'components/Notification/Notification';
@@ -16,6 +18,21 @@ export default class App extends Component {
     ],
     filter: '',
   };
+
+  componentDidMount() {
+    const localStorageData = LocalStorage.load('contact');
+    const localStorageDataLength = localStorageData.length;
+    if (localStorageData && localStorageDataLength > 0) {
+      this.setState({ contacts: localStorageData });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts } = this.state;
+    // if (contacts !== prevState.contacts) {
+    LocalStorage.save('contact', contacts);
+    // }
+  }
 
   changeFilter = ({ target: { value } }) => {
     this.setState({ filter: value });

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const Text = styled.p`
-  margin-bottom: 15px;
-
   color: ${({ theme: { colors } }) => colors.textColorDark};
   font-weight: 700;
   font-size: 20px;

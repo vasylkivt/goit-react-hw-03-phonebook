@@ -4,7 +4,7 @@ export const Title = styled.h2`
   display: flex;
   justify-content: center;
 
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 
   color: ${({ theme: { colors } }) => colors.titleColorDark};
   font-weight: 700;
