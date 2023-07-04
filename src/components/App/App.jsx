@@ -4,14 +4,15 @@ import Notification from 'components/Notification/Notification';
 import Section from 'components/Section/Section';
 
 import { Component } from 'react';
+import { NotificationContactList, NotificationForm } from './App.style';
 
 export default class App extends Component {
   state = {
     contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+      // { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      // { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      // { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      // { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
   };
@@ -26,7 +27,7 @@ export default class App extends Component {
     });
   };
 
-  addContact = contact => {
+  addContact = (contact, actions) => {
     this.setState(prevState => {
       const isExist = prevState.contacts.find(
         ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
@@ -37,6 +38,7 @@ export default class App extends Component {
         return;
       }
 
+      actions.resetForm();
       return { contacts: [...prevState.contacts, contact] };
     });
   };
@@ -58,7 +60,9 @@ export default class App extends Component {
     return (
       <Section title={'phonebook'}>
         <ContactForm onSubmit={this.addContact}>
-          {isPhonebookEmpty && <Notification message="Add first contact!" />}
+          {isPhonebookEmpty && (
+            <NotificationForm message="Add first contact!" />
+          )}
         </ContactForm>
 
         {!isPhonebookEmpty ? (
@@ -74,7 +78,7 @@ export default class App extends Component {
             )}
           </Contacts>
         ) : (
-          <Notification message="Your phonebook is empty." />
+          <NotificationContactList message="Your phonebook is empty." />
         )}
       </Section>
     );

@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 
 import { Text } from './Notification.style';
 
-export default function Notification({ message }) {
+export default function Notification({ message, className }) {
   return (
     <>
-      <Text>{message}</Text>
+      <Text className={className}>{message}</Text>
     </>
   );
 }

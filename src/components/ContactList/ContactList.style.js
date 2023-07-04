@@ -67,6 +67,7 @@ export const Button = styled.button`
   }
 
   &:hover {
+    box-shadow: 0px 0px 10px 0px ${({ theme: { colors } }) => colors.red};
     transform: scale(1.1);
     background-color: ${({ theme: { colors } }) => colors.red};
   }

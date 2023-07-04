@@ -34,7 +34,7 @@ export const InputName = styled.label`
   gap: 20px;
   margin-left: auto;
 
-  color: ${({ theme }) => theme.colors.titleColor};
+  color: ${({ theme: { colors } }) => colors.textColorDark};
   font-weight: 600;
   font-size: 18px;
   line-height: 1.11;

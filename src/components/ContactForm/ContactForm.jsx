@@ -27,8 +27,8 @@ export default function ContactForm({ onSubmit, children }) {
           name: '',
           number: '',
         }}
-        onSubmit={values => {
-          onSubmit({ ...values, id: nanoid() });
+        onSubmit={(values, actions) => {
+          onSubmit({ ...values, id: nanoid() }, actions);
         }}
       >
         <Form>
