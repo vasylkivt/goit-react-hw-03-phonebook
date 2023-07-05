@@ -29,9 +29,10 @@ export default class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { contacts } = this.state;
-    // if (contacts !== prevState.contacts) {
-    LocalStorage.save('contact', contacts);
-    // }
+
+    if (contacts !== prevState.contacts) {
+      LocalStorage.save('contact', contacts);
+    }
   }
 
   changeFilter = ({ target: { value } }) => {
