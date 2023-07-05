@@ -7,23 +7,57 @@ import Section from 'components/Section/Section';
 
 import { Component } from 'react';
 import { NotificationContactList, NotificationForm } from './App.style';
+import { Toaster, toast } from 'react-hot-toast';
+
+const toastOptions = {
+  // Define default options
+
+  style: {
+    background: '#cfd4c4',
+    color: '#003049',
+  },
+
+  // Default options for specific types
+  success: {
+    style: {
+      boxShadow: '0px 0px 5px 0px #2A9D8F',
+    },
+    iconTheme: {
+      primary: '#2A9D8F',
+    },
+  },
+  error: {
+    style: {
+      boxShadow: '0px 0px 5px 0px #fb6107',
+    },
+    iconTheme: {
+      primary: '#fb6107',
+    },
+  },
+};
+
+// const initialData = [
+//   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+//   { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+//   { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+//   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+// ];
 
 export default class App extends Component {
+  LOCAL_STORAGE_KEY = 'contact';
+
   state = {
-    contacts: [
-      // { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      // { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      // { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      // { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
   componentDidMount() {
-    const localStorageData = LocalStorage.load('contact');
-    const localStorageDataLength = localStorageData.length;
-    if (localStorageData && localStorageDataLength > 0) {
+    const localStorageData = LocalStorage.load(this.LOCAL_STORAGE_KEY);
+    const localStorageDataLength = localStorageData?.length;
+    if (localStorageData !== null && localStorageDataLength > 0) {
       this.setState({ contacts: localStorageData });
+    } else {
+      this.setState({ contacts: [] });
     }
   }
 
@@ -31,7 +65,7 @@ export default class App extends Component {
     const { contacts } = this.state;
 
     if (contacts !== prevState.contacts) {
-      LocalStorage.save('contact', contacts);
+      LocalStorage.save(this.LOCAL_STORAGE_KEY, contacts);
     }
   }
 
@@ -41,6 +75,8 @@ export default class App extends Component {
 
   removeContact = contactId => {
     this.setState(({ contacts }) => {
+      const removedContact = contacts.find(({ id }) => id === contactId);
+      toast.success(`${removedContact.name} deleted from your contacts list.`);
       return { contacts: contacts.filter(({ id }) => id !== contactId) };
     });
   };
@@ -52,9 +88,11 @@ export default class App extends Component {
       );
 
       if (isExist) {
-        alert(`${contact.name} is already in contacts.`);
+        toast.error(`${contact.name} is already in contacts.`);
+        // alert(`${contact.name} is already in contacts.`);
         return;
       }
+      toast.success(`${contact.name} added to your contact list.`);
 
       actions.resetForm();
       return { contacts: [...prevState.contacts, contact] };
@@ -76,29 +114,33 @@ export default class App extends Component {
     const isPhonebookEmpty = contacts.length === 0;
 
     return (
-      <Section title={'phonebook'}>
-        <ContactForm onSubmit={this.addContact}>
-          {isPhonebookEmpty && (
-            <NotificationForm message="Add first contact!" />
-          )}
-        </ContactForm>
-
-        {!isPhonebookEmpty ? (
-          <Contacts
-            title={'contact list'}
-            contacts={filterContacts}
-            value={filter}
-            onChange={this.changeFilter}
-            onRemoveContact={this.removeContact}
-          >
-            {!isPhonebookEmpty && filterContacts.length === 0 && (
-              <Notification message="nothing found" />
+      <>
+        <Section title={'phonebook'}>
+          <ContactForm onSubmit={this.addContact}>
+            {isPhonebookEmpty && (
+              <NotificationForm message="Add first contact!" />
             )}
-          </Contacts>
-        ) : (
-          <NotificationContactList message="Your phonebook is empty." />
-        )}
-      </Section>
+          </ContactForm>
+          <div>
+            <Toaster toastOptions={toastOptions} />
+          </div>
+          {!isPhonebookEmpty ? (
+            <Contacts
+              title={'contact list'}
+              contacts={filterContacts}
+              value={filter}
+              onChange={this.changeFilter}
+              onRemoveContact={this.removeContact}
+            >
+              {!isPhonebookEmpty && filterContacts.length === 0 && (
+                <Notification message="nothing found" />
+              )}
+            </Contacts>
+          ) : (
+            <NotificationContactList message="Your phonebook is empty." />
+          )}
+        </Section>
+      </>
     );
   }
 }
