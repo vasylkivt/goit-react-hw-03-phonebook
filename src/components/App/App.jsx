@@ -44,7 +44,7 @@ const toastOptions = {
 // ];
 
 export default class App extends Component {
-  LOCAL_STORAGE_KEY = 'contact';
+  LOCAL_STORAGE_KEY = 'contacts';
 
   state = {
     contacts: [],
